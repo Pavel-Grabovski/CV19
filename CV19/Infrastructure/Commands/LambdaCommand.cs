@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CV19.Infrastructure.Commands.Base;
+using System;
 
-namespace CV19.Infrastructure.Commands.Base
+namespace CV19.Infrastructure.Commands
 {
     internal class LambdaCommand : Command
     {
