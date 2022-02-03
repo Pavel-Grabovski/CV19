@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace CV19.Infrastructure.Commands.Base
+namespace CV19.Infrastructure.Commands
 {
     internal abstract class Command : ICommand
     {
