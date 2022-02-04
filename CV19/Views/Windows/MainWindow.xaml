@@ -7,6 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:CV19"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800">
     <Window.InputBindings>
@@ -75,17 +76,17 @@
                                   Width="5"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Вкладка 2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="173*"/>
-                        <RowDefinition Height="215*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="359*"/>
-                        <ColumnDefinition Width="435*"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
+            <TabItem Header="График 2">
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left"/>
+                        <oxy:LinearAxis Position="Bottom"/>
+                    </oxy:Plot.Axes>
+                    <oxy:LinearBarSeries Color="Red"
+                                         ItemsSource="{Binding TestDataPoints}"
+                                         DataFieldX="XValue"
+                                         DataFieldY="YValue"/>
+                </oxy:Plot>
             </TabItem>
         </TabControl>
     </DockPanel>
