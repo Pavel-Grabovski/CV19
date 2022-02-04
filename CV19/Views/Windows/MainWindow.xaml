@@ -76,13 +76,13 @@
                                   Width="5"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="График 2">
+            <TabItem Header="График">
                 <oxy:Plot>
                     <oxy:Plot.Axes>
                         <oxy:LinearAxis Position="Left"/>
                         <oxy:LinearAxis Position="Bottom"/>
                     </oxy:Plot.Axes>
-                    <oxy:LinearBarSeries Color="Red"
+                    <oxy:LineSeries Color="Red"
                                          ItemsSource="{Binding TestDataPoints}"
                                          DataFieldX="XValue"
                                          DataFieldY="YValue"/>
