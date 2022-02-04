@@ -19,8 +19,8 @@
         <cmd:CloseApplicationCommand x:Key="CloseApplicationKey"/>
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Файл">
+        <Menu DockPanel.Dock="Top" Height="30">
+            <MenuItem Header="Файл" Height="30">
                 <!--<MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"/>-->
                 <MenuItem Header="Выход" Command="{StaticResource CloseApplicationKey}"/>
                 <!--<MenuItem Header="Выход">
@@ -29,7 +29,7 @@
                     </MenuItem.Command>
                 </MenuItem>-->
             </MenuItem>
-            <MenuItem Header="Помощь">
+            <MenuItem Header="Помощь" Height="30">
                 <MenuItem Header="О программе"/>
             </MenuItem>
         </Menu>
