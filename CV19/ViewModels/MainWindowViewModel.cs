@@ -72,7 +72,6 @@ namespace CV19.ViewModels
         {
             Application.Current.Shutdown();
         }
-        #endregion
 
         public ICommand ChangeTabIndexCommand { get; }
         private bool CanChangeTabIndexCommandExecute(object p) => _SelectedPageIndex >= 0;
@@ -81,6 +80,7 @@ namespace CV19.ViewModels
             if (p is null) return;
             SelectedPageIndex += Convert.ToInt32(p);
         }
+        #endregion
         public MainWindowViewModel()
         {
             #region Команды
