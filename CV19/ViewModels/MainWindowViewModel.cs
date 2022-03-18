@@ -23,6 +23,16 @@ namespace CV19.ViewModels
             set => Set(ref _SelectedGroup, value);
         }
 
+        public object[] CompositeCollection { get; }
+
+        private object _SelectedCompositeValue;
+        public object SelectedCompositeValue
+        {
+            get => _SelectedCompositeValue;
+            set => Set(ref _SelectedCompositeValue, value);
+        }
+
+
         #region SelectedPagendex: int - номер выбранной вкладки
 
         ///<summary> Номер выбранной вкладки</summary>
@@ -136,8 +146,14 @@ namespace CV19.ViewModels
 
             Groups = new ObservableCollection<Group>(groups);
 
+            var data_list = new List<object>();
+            data_list.Add("Привет мир");
+            data_list.Add(42);
+            var group = Groups[1];
+            data_list.Add(group);
+            data_list.Add(group.Students[0]);
 
-
+            CompositeCollection = data_list.ToArray();
         }
 
 
