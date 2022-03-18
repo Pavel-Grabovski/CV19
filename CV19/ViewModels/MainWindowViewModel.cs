@@ -90,6 +90,7 @@ namespace CV19.ViewModels
         /*-------------------------------------------------------------------------------------------------------------------------*/
 
         #region Команды
+        #region CloseApplicationCommand
         public ICommand CloseApplicationCommand { get; }
 
         private bool CanCloseApplicationCommandExecuted(object p) => true;
@@ -97,7 +98,9 @@ namespace CV19.ViewModels
         {
             Application.Current.Shutdown();
         }
+        #endregion
 
+        #region ChangeTabIndexCommand
         public ICommand ChangeTabIndexCommand { get; }
         private bool CanChangeTabIndexCommandExecute(object p) => _SelectedPageIndex >= 0;
         private void OnChangeTabIndexCommandExecute(object p)
@@ -107,6 +110,38 @@ namespace CV19.ViewModels
         }
         #endregion
 
+        #region CreateGroupCommand
+        public ICommand CreateGroupCommand { get; }
+        private bool CanCreateGroupCommandExecute(object p) => true;
+
+        private void OnCreateGroupCommandExecute(object p)
+        {
+            var group_max_index = Groups.Count + 1;
+            var new_group = new Group
+            {
+                Name = $"Группа {group_max_index}",
+                Students = new ObservableCollection<Student>()
+            };
+            Groups.Add(new_group);
+        }
+        #endregion
+
+        #region DeleteGroupCommand
+        public ICommand DeleteGroupCommand { get; }
+        private bool CanDeleteGroupCommandExecute(object p) => p is Group group && Groups.Contains(group) ;
+        private void OnDeleteGroupCommandExecute(object p)
+        {
+            if (!(p is Group group)) return;
+            var group_index = Groups.IndexOf(group);
+            Groups.Remove(group);
+            if(group_index < Groups.Count)
+            {
+                SelectedGroup = Groups[group_index];
+            }
+        }
+        #endregion
+        #endregion
+
         /*-------------------------------------------------------------------------------------------------------------------------*/
         public MainWindowViewModel()
         {
@@ -114,6 +149,9 @@ namespace CV19.ViewModels
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecuted);
             ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecute, CanChangeTabIndexCommandExecute);
+            CreateGroupCommand = new LambdaCommand(OnCreateGroupCommandExecute, CanCreateGroupCommandExecute);
+            DeleteGroupCommand = new LambdaCommand(OnDeleteGroupCommandExecute, CanDeleteGroupCommandExecute);
+
             #endregion
 
             var data_points = new List<DataPoint>((int)(360 / 0.1));
