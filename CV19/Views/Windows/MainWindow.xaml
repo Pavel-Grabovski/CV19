@@ -56,8 +56,17 @@
         <TabControl SelectedIndex="{Binding SelectedPageIndex}">
             <TabItem Header="Тестирование виртуализации">
                 <Grid>
-                    <TextBlock Text="{Binding Source={x:Static local:App.IsDesingMode}}"/>
-                    <ListBox HorizontalAlignment="Left" Width="200" Margin="30" ItemsSource="{Binding TestStudent}">
+                    <!--<TextBlock Text="{Binding Source={x:Static local:App.IsDesingMode}}"/>-->
+                    <ListBox HorizontalAlignment="Left" Width="200" Margin="30" 
+                             ItemsSource="{Binding TestStudent}" 
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.IsContainerVirtualizable="True">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -67,7 +76,7 @@
                             <DataTemplate DataType="decanat:Student">
                                 <Border BorderBrush="Blue" BorderThickness="1" CornerRadius="3">
                                     <Border.CacheMode>
-                                        <BitmapCache/>
+                                        <BitmapCache RenderAtScale="5" />
                                     </Border.CacheMode>
                                     <StackPanel>
                                         <TextBlock Text="{Binding Surname}" ToolTip="{Binding Name}"/>
@@ -150,10 +159,12 @@
                                 <TextBox />
                             </DockPanel>
                             <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
-                                  AutoGenerateColumns="False" 
-                                  CanUserAddRows="False"
-                                  GridLinesVisibility="Vertical" VerticalGridLinesBrush="Red"
-                                  AlternatingRowBackground="LightGray">
+                                      AutoGenerateColumns="False" 
+                                      CanUserAddRows="False"
+                                      GridLinesVisibility="Vertical"
+                                      VerticalGridLinesBrush="Red"
+                                      AlternatingRowBackground="LightGray" 
+                                      EnableRowVirtualization="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="Auto" IsReadOnly="True"/>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>
