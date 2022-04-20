@@ -54,7 +54,7 @@
             </StatusBarItem>
         </StatusBar>
         <TabControl SelectedIndex="{Binding SelectedPageIndex}">
-            <TabItem Header="Тестирование виртуализации">
+            <TabItem Header="Тестирование виртуализации" Visibility="Collapsed">
                 <Grid>
                     <!--<TextBlock Text="{Binding Source={x:Static local:App.IsDesingMode}}"/>-->
                     <ListBox HorizontalAlignment="Left" Width="200" Margin="30" 
@@ -142,8 +142,6 @@
                                                 <Setter TargetName="TextView" 
                                                         Property="Foreground" 
                                                         Value="Red"/>
-
-
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
@@ -158,7 +156,7 @@
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,3,0"/>
                                 <TextBox />
                             </DockPanel>
-                            <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                            <DataGrid ItemsSource="{Binding SelectedGroupStudents}" 
                                       AutoGenerateColumns="False" 
                                       CanUserAddRows="False"
                                       GridLinesVisibility="Vertical"
