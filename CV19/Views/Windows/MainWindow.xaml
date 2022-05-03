@@ -9,6 +9,7 @@
         xmlns:local="clr-namespace:CV19"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800">
     <Window.InputBindings>
@@ -103,7 +104,11 @@
                                 <CollectionViewSource x:Key="GroupsCollection"
                                                       x:Name="GroupsCollection"
                                                       Source="{Binding Groups}"
-                                                      Filter="GroupsCollection_OnFilter" />
+                                                      Filter="GroupsCollection_OnFilter">
+                                    <CollectionViewSource.SortDescriptions>
+                                        <cm:SortDescription PropertyName="Name" Direction="Descending"/>
+                                    </CollectionViewSource.SortDescriptions>
+                                </CollectionViewSource>
                             </DockPanel.Resources>
                             <DockPanel DockPanel.Dock="Top" Margin="0,3">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,3,0"/>
@@ -154,7 +159,7 @@
                         <DockPanel>
                             <DockPanel DockPanel.Dock="Top">
                                 <fa:ImageAwesome Height="12" Icon="Solid_Search" Margin="0,0,3,0"/>
-                                <TextBox />
+                                <TextBox Text="{Binding StudentFilterText, UpdateSourceTrigger=PropertyChanged}" />
                             </DockPanel>
                             <DataGrid ItemsSource="{Binding SelectedGroupStudents}" 
                                       AutoGenerateColumns="False" 
@@ -163,6 +168,9 @@
                                       VerticalGridLinesBrush="Red"
                                       AlternatingRowBackground="LightGray" 
                                       EnableRowVirtualization="True">
+                                <!--<DataGrid.GroupStyle>
+                                    <GroupStyle/>
+                                </DataGrid.GroupStyle>-->
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" Width="Auto" IsReadOnly="True"/>
                                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>

@@ -48,8 +48,50 @@ namespace CV19.ViewModels
         }
         #endregion
 
+        #region StudentFilterText:string -Текст фильтра студентов
+
+        private string _StudentFilterText;
+        public string StudentFilterText
+        {
+            get => _StudentFilterText;
+            set
+            {
+                if (!Set(ref _StudentFilterText, value)) return;
+                _SelectedGroupStudents.View.Refresh();
+            }
+        }
+        #endregion
+
+        #region SelectedGroupStudents - Выбрать группу студентов
         private readonly CollectionViewSource _SelectedGroupStudents = new CollectionViewSource();
+
+        private void OnStudentFiltred(object sender, FilterEventArgs e)
+        {
+            if(!(e.Item is Student student))
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            var filter_text = _StudentFilterText;
+            if (string.IsNullOrWhiteSpace(filter_text))
+                return;
+
+            if(student.Name is null || student.Surname is null || student.Patronymic is null)
+            {
+                e.Accepted = false;
+                return;
+            }
+
+            if (student.Name.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+            if (student.Surname.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+            if (student.Patronymic.Contains(filter_text, StringComparison.OrdinalIgnoreCase)) return;
+
+            e.Accepted = false;
+        }
+
         public ICollectionView SelectedGroupStudents => _SelectedGroupStudents?.View;
+        #endregion
 
         #region SelectedPagendex: int - номер выбранной вкладки
 
@@ -192,7 +234,7 @@ namespace CV19.ViewModels
             {
                 Name = $"Name {students_index}",
                 Surname = $"Surname {students_index}",
-                Patronymic = $"Patronymic {students_index}",
+                Patronymic = $"Patronymic {students_index++}",
                 Birthday = DateTime.Now,
                 Rating = 0
             });
@@ -214,8 +256,12 @@ namespace CV19.ViewModels
             data_list.Add(group.Students[0]);
 
             CompositeCollection = data_list.ToArray();
+
+            _SelectedGroupStudents.Filter += OnStudentFiltred;
+
+
+            //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+            //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Birthday"));
         }
-
-
     }
 }
