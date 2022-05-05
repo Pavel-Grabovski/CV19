@@ -4,18 +4,24 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using CV19.Models;
 
-namespace CV19Console
+namespace CV19.Services
 {
-    class Program
+    internal class DataService
     {
-        private const string data_url = @"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+        private const string _DataSourceAddress = @"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
         private static async Task<Stream> GetDataStream()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync(data_url, HttpCompletionOption.ResponseHeadersRead);
+            var response = await client.GetAsync(
+                _DataSourceAddress,
+                HttpCompletionOption.ResponseHeadersRead);
             return await response.Content.ReadAsStreamAsync();
         }
 
@@ -42,7 +48,7 @@ namespace CV19Console
            .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
            .ToArray();
 
-        private static IEnumerable<(string Contry, string Province, int[] Counts)> GetData()
+        private static IEnumerable<(string Province, string Contry, (double Lat, double Lon) Place, int[] Counts)> GetCountriesData()
         {
             var lines = GetDataLines()
                .Skip(1)
@@ -52,41 +58,32 @@ namespace CV19Console
             {
                 var province = row[0].Trim();
                 var country_name = row[1].Trim(' ', '"');
+                var latitude = double.Parse(row[2]);
+                var longitude = double.Parse(row[3]);
                 var counts = row.Skip(4).Select(int.Parse).ToArray();
 
-                yield return (country_name, province, counts);
+                yield return (province, country_name, (latitude, longitude), counts);
             }
         }
-
-        static void Main(string[] args)
+        public IEnumerable<CountryInfo> GetData()
         {
-            //var web_client = new WebClient();
+            var dates = GetDates();
+            var data = GetCountriesData().GroupBy(d => d.Contry);
+            foreach (var country_info in data)
+            {
+                var country = new CountryInfo
+                {
+                    Name = country_info.Key,
+                    ProvinceCounts = country_info.Select(c => new PlaceInfo
+                    {
+                        Name = c.Province,
+                        Location = new Point(c.Place.Lat, c.Place.Lon),
+                        Counts = dates.Zip(c.Counts, (date, count) => new ConfirmedCount { Date = date, Count = count })
+                    })
+                };
+                yield return country;
 
-            //var client = new HttpClient();
-
-            //var items = new string[10];
-
-            //var last_item = items[^1];
-            //var prev_last_item = items[^2];
-
-            //var response = client.GetAsync(data_url).Result;
-            //var csv_str = response.Content.ReadAsStringAsync().Result;
-
-            //foreach (var data_line in GetDataLines())
-            //    Console.WriteLine(data_line);
-
-            //var dates = GetDates();
-
-            //Console.WriteLine(string.Join("\r\n", dates));
-
-            var russia_data = GetData()
-               .First(v => v.Contry.Equals("Russia", StringComparison.OrdinalIgnoreCase));
-
-
-            Console.WriteLine(string.Join("\r\n", GetDates().Zip(russia_data.Counts, (date, count) => $"{date:dd:MM} - {count}")));
-
-
-            Console.ReadLine();
+            }
         }
     }
 }
