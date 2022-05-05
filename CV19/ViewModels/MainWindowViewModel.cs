@@ -145,12 +145,29 @@ namespace CV19.ViewModels
         }
         #endregion
 
-        public IEnumerable<Student> TestStudent => Enumerable.Range(1, App.IsDesingMode ? 10 : 100000)
+        public IEnumerable<Student> TestStudents => Enumerable.Range(1, App.IsDesingMode ? 10 : 100000)
             .Select(i => new Student
             {
                 Name = $"Имя {i}",
                 Surname = $"Фамилия {i}"
             });
+
+        public DirectoryViewModel DiskRootDir { get; } = new DirectoryViewModel("c:\\");
+
+        #region SelectedDirectory: DirectoryViewModel - Выбранная директория
+
+        /// <summary> Выбранная директория  </summary>
+        private DirectoryViewModel _SelectedDirectory;
+
+        /// <summary> Выбранная директория  </summary>
+        public DirectoryViewModel SelectedDirectory
+        {
+            get => _SelectedDirectory;
+            set => Set(ref _SelectedDirectory, value);
+        }
+
+        #endregion
+
         /*-------------------------------------------------------------------------------------------------------------------------*/
 
         #region Команды
@@ -263,5 +280,7 @@ namespace CV19.ViewModels
             //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Birthday"));
         }
+
+        /*------------------------------------------------------------------------------------------------------------------------*/
     }
 }
