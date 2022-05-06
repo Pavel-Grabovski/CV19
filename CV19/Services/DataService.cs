@@ -34,9 +34,10 @@ namespace CV19.Services
             {
                 var line = data_reader.ReadLine();
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                line = line.Replace("Korea,", "Korea -");
-                line = line.Replace("Saint Helena, Ascension and Tristan da Cunha", "Saint Helena - Ascension and Tristan da Cunha");
-                line = line.Replace("Bonaire, Sint Eustatius and Saba", "Bonaire - Sint Eustatius and Saba");
+                line = line.Replace("Korea,", "Korea -")
+                    .Replace("Bonaire,", "Bonaire -")
+                    .Replace("Saint Helena, Ascension and Tristan da Cunha", "Saint Helena - Ascension and Tristan da Cunha")
+                    .Replace("Bonaire, Sint Eustatius and Saba", "Bonaire - Sint Eustatius and Saba");
                 yield return line;
             }
         }
