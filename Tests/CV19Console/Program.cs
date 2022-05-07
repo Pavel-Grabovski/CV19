@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CV19Console
@@ -21,7 +22,7 @@ namespace CV19Console
 
         private static IEnumerable<string> GetDataLines()
         {
-            using var data_stream = GetDataStream().Result;
+            using var data_stream = (SynchronizationContext.Current is null ? GetDataStream() : Task.Run(GetDataStream)).Result;
             using var data_reader = new StreamReader(data_stream);
 
             while (!data_reader.EndOfStream)

@@ -235,6 +235,7 @@ namespace CV19.ViewModels
 
             #endregion
 
+            #region Фильтры
             var data_points = new List<DataPoint>((int)(360 / 0.1));
             for (var x = 0d; x <= 360; x += 0.1)
             {
@@ -279,6 +280,10 @@ namespace CV19.ViewModels
 
             //_SelectedGroupStudents.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Birthday"));
+
+            #endregion
+
+
         }
 
         /*------------------------------------------------------------------------------------------------------------------------*/
