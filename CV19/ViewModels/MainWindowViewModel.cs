@@ -19,6 +19,12 @@ namespace CV19.ViewModels
     {
         /*----------------------------------------------------------------------------------------------------------------------------*/
 
+        private readonly CountriesStatisticViewModel _CountriesStatistic;
+
+        /*----------------------------------------------------------------------------------------------------------------------------*/
+
+        /*----------------------------------------------------------------------------------------------------------------------------*/
+
         public ObservableCollection<Group> Groups { get; }
 
 
@@ -226,6 +232,9 @@ namespace CV19.ViewModels
         /*-------------------------------------------------------------------------------------------------------------------------*/
         public MainWindowViewModel()
         {
+            _CountriesStatistic = new CountriesStatisticViewModel(this);
+
+
             #region Команды
 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecuted);
@@ -282,7 +291,6 @@ namespace CV19.ViewModels
             //_SelectedGroupStudents.GroupDescriptions.Add(new PropertyGroupDescription("Birthday"));
 
             #endregion
-
 
         }
 
