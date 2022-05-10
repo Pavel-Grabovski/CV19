@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands;
+using System.Linq;
+using System.Windows;
 
 namespace CV19.ViewModels
 {
@@ -39,6 +41,30 @@ namespace CV19.ViewModels
         }
 
         #endregion
+
+        /// <summary> Отладочный конструктор, используеммый в процессе разработки в визуальном дизайнере </summary>
+        public CountriesStatisticViewModel() : this(null)
+        {
+            if (!App.IsDesingMode)
+                throw new InvalidOperationException("Вызов конструктора, предназначенного для использования в обычном режиме");
+
+            _Contries = Enumerable.Range(1, 10)
+               .Select(i => new CountryInfo
+               {
+                   Name = $"Country {i}",
+                   ProvinceCounts = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+                   {
+                       Name = $"Province {i}",
+                       Location = new Point(i, j),
+                       Counts = Enumerable.Range(1, 10).Select(k => new ConfirmedCount
+                       {
+                           Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+                           Count = k
+                       }).ToArray()
+                   }).ToArray()
+               }).ToArray();
+        }
+
 
         public CountriesStatisticViewModel(MainWindowViewModel mainModel)
         {

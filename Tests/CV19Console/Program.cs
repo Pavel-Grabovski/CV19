@@ -27,7 +27,7 @@ namespace CV19Console
 
             while (!data_reader.EndOfStream)
             {
-                var line = data_reader.ReadLine();
+                string line = data_reader.ReadLine();
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 line = line.Replace("Korea,", "Korea -")
                     .Replace("Bonaire,", "Bonaire -")
