@@ -34,10 +34,13 @@ namespace CV19.Services
             {
                 var line = data_reader.ReadLine();
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                line = line.Replace("Korea,", "Korea -")
-                    .Replace("Bonaire,", "Bonaire -")
-                    .Replace("Saint Helena, Ascension and Tristan da Cunha", "Saint Helena - Ascension and Tristan da Cunha")
-                    .Replace("Bonaire, Sint Eustatius and Saba", "Bonaire - Sint Eustatius and Saba");
+                //line = line.Replace("Korea,", "Korea -")
+                //    .Replace("Bonaire,", "Bonaire -")
+                //    .Replace("Helena,", "Helena -");
+                //yield return line;
+
+                if (line.Contains('"'))
+                    line = line.Insert(line.IndexOf(',', line.IndexOf('"')) + 1, " -").Remove(line.IndexOf(',', line.IndexOf('"')), 1);
                 yield return line;
             }
         }
@@ -61,15 +64,26 @@ namespace CV19.Services
                 var province = row[0].Trim();
                 var country_name = row[1].Trim(' ', '"');
 
-                NumberStyles style = NumberStyles.AllowDecimalPoint;
-                IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-                double latitude;
-                double longitude;
-                Double.TryParse(row[2], style, formatter, out latitude);
-                Double.TryParse(row[3], style, formatter, out longitude);
+                //NumberStyles style = NumberStyles.AllowDecimalPoint;
+                //IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+                //double latitude;
+                //double longitude;
+                //Double.TryParse(row[2], style, formatter, out latitude);
+                //Double.TryParse(row[3], style, formatter, out longitude);
+
+                if(row[2] == "" && row[3] == "")
+                {
+                    continue;
+                }
+                var latitude =  Convert.ToDouble(row[2].Replace('.', ','));
+                var longitude = Convert.ToDouble(row[2].Replace('.', ','));
 
                 var counts = row.Skip(4).Select(int.Parse).ToArray();
 
+                if (country_name == "Angola")
+                {
+                    
+                }
                 yield return (province, country_name, (latitude, longitude), counts);
             }
         }

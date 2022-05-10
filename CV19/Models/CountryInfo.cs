@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 
 namespace CV19.Models
 {
@@ -25,10 +24,5 @@ namespace CV19.Models
         }
 
         public IEnumerable<PlaceInfo> ProvinceCounts { get; set; }
-
-        public override string ToString()
-        {
-            return $"{Name} ({Location})";
-        }
     }
 }

@@ -29,10 +29,13 @@ namespace CV19Console
             {
                 string line = data_reader.ReadLine();
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                line = line.Replace("Korea,", "Korea -")
-                    .Replace("Bonaire,", "Bonaire -")
-                    .Replace("Saint Helena, Ascension and Tristan da Cunha", "Saint Helena - Ascension and Tristan da Cunha")
-                    .Replace("Bonaire, Sint Eustatius and Saba", "Bonaire - Sint Eustatius and Saba");
+                //line = line.Replace("Korea,", "Korea -")
+                //    .Replace("Bonaire,", "Bonaire -")
+                //    .Replace("Helena,", "Helena -");
+                //yield return line;
+
+                if (line.Contains('"'))
+                    line = line.Insert(line.IndexOf(',', line.IndexOf('"')) + 1, " -").Remove(line.IndexOf(',', line.IndexOf('"')), 1);
                 yield return line;
             }
         }
@@ -62,24 +65,6 @@ namespace CV19Console
 
         static void Main(string[] args)
         {
-            //var web_client = new WebClient();
-
-            //var client = new HttpClient();
-
-            //var items = new string[10];
-
-            //var last_item = items[^1];
-            //var prev_last_item = items[^2];
-
-            //var response = client.GetAsync(data_url).Result;
-            //var csv_str = response.Content.ReadAsStringAsync().Result;
-
-            //foreach (var data_line in GetDataLines())
-            //    Console.WriteLine(data_line);
-
-            //var dates = GetDates();
-
-            //Console.WriteLine(string.Join("\r\n", dates));
 
             var russia_data = GetData()
                .First(v => v.Contry.Equals("Russia", StringComparison.OrdinalIgnoreCase));
