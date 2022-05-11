@@ -20,13 +20,28 @@ namespace CV19.ViewModels
         #region Contries IEnumerable<CountryInfo> Статистика по странам
 
         /// <summary> Статистика по странам </summary>
-        private IEnumerable<CountryInfo> _Contries;
+        private IEnumerable<CountryInfo> _Countries;
 
         /// <summary> Статистика по странам </summary>
         public IEnumerable<CountryInfo> Countries
         {
-            get => _Contries;
-            private set => Set(ref _Contries, value); 
+            get => _Countries;
+            private set => Set(ref _Countries, value); 
+        }
+
+        #endregion
+
+        #region SelectedCountry: CountryInfo - выбранная страна
+
+        /// <summary> SelectedCountry: CountryInfo </summary>
+        private CountryInfo _SelectedCountry;
+
+
+        /// <summary> SelectedCountry: CountryInfo </summary>
+        public CountryInfo SelectedCountry
+        {
+            get => _SelectedCountry;
+            set => Set(ref _SelectedCountry, value);
         }
 
         #endregion
@@ -48,21 +63,21 @@ namespace CV19.ViewModels
             if (!App.IsDesingMode)
                 throw new InvalidOperationException("Вызов конструктора, предназначенного для использования в обычном режиме");
 
-            _Contries = Enumerable.Range(1, 10)
+            /*_Countries = Enumerable.Range(1, 3)
                .Select(i => new CountryInfo
                {
                    Name = $"Country {i}",
-                   ProvinceCounts = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+                   ProvinceCounts = Enumerable.Range(1, 3).Select(j => new PlaceInfo
                    {
                        Name = $"Province {i}",
                        Location = new Point(i, j),
-                       Counts = Enumerable.Range(1, 10).Select(k => new ConfirmedCount
+                       Counts = Enumerable.Range(1, 3).Select(k => new ConfirmedCount
                        {
                            Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
                            Count = k
                        }).ToArray()
                    }).ToArray()
-               }).ToArray();
+               }).ToArray();*/
         }
 
 
