@@ -1,14 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace CV19.Infrastructure.Converters
 {
+    [MarkupExtensionReturnType(typeof(CompositeConverter))]
     internal class CompositeConverter : Converter
     {
+        public CompositeConverter() { }
+
+        public CompositeConverter(IValueConverter first) => this.First = First;
+
+        public CompositeConverter(IValueConverter first, IValueConverter second) : this(first) => this.Second = Second;
+
+        [ConstructorArgument("First")]
         public IValueConverter First { get; set; }
+
+        [ConstructorArgument("Second")]
         public IValueConverter Second { get; set; }
 
 
