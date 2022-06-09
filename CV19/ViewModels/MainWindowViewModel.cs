@@ -183,7 +183,8 @@ namespace CV19.ViewModels
         private bool CanCloseApplicationCommandExecuted(object p) => true;
         private void OnCloseApplicationCommandExecuted(object p)
         {
-            Application.Current.Shutdown();
+            (RootObject as Window)?.Close();
+            //Application.Current.Shutdown();
         }
         #endregion
 
