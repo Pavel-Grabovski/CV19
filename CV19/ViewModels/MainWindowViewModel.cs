@@ -1,8 +1,6 @@
 ﻿using CV19.Infrastructure.Commands;
-using CV19.Models;
 using CV19.Models.Decanat;
 using CV19.ViewModels.Base;
-using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
