@@ -12,7 +12,7 @@ namespace CV19.Models
             get
             {
                 if (_Location != null)
-                    return (Point)Location;
+                    return (Point)_Location;
                 if (Provinces is null) return default;
 
                 var average_x = Provinces.Average(p => p.Location.X);
