@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:CV19.Views"
              xmlns:common="clr-namespace:CV19.Infrastructure.Common"
              xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF"
              xmlns:fa="http://schemas.fontawesome.com/icons/"
              xmlns:vm="clr-namespace:CV19.ViewModels"
              xmlns:m="clr-namespace:CV19.Models"
@@ -86,6 +87,11 @@
                                     ItemsSource="{Binding SelectedCountry.Counts}"
                                     DataFieldX="Date" DataFieldY="Count"/>
                 </oxy:Plot>
+                <map:Map Grid.Row="1" ZoomLevel="3" MaxZoomLevel="21" Center="{Binding SelectedCountry.Location, Converter={c:PointToMapLocation}}">
+                    <map:MapScale Margin="4" Opacity="1" Background="Transparent"/>
+                    <map:MapGraticule Opacity="0.3" Background="Transparent"/>
+                    <map:MapTileLayer TileSource="http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png"/>
+                </map:Map>
             </Grid>
         </GroupBox>
     </Grid>
