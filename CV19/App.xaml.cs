@@ -1,4 +1,8 @@
 ﻿using System.Windows;
+using CV19.Services;
+using CV19.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace CV19
 {
@@ -17,6 +21,12 @@ namespace CV19
         {
             IsDesingMode = false;
             base.OnStartup(e);
+        }
+
+        public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
+        {
+            services.AddSingleton<DataService>();
+            services.AddSingleton<CountriesStatisticViewModel>();
         }
     }
 }
