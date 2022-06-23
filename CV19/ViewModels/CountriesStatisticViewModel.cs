@@ -15,7 +15,7 @@ namespace CV19.ViewModels
     {
         private DataService _DataService;
 
-        public MainWindowViewModel MainModel { get; }
+        public MainWindowViewModel MainModel { get; internal set; }
 
         #region Contries IEnumerable<CountryInfo> Статистика по странам
 
@@ -58,33 +58,32 @@ namespace CV19.ViewModels
         #endregion
 
         /// <summary> Отладочный конструктор, используеммый в процессе разработки в визуальном дизайнере </summary>
-        public CountriesStatisticViewModel() : this(null)
+        //public CountriesStatisticViewModel() : this(null)
+        //{
+        //    if (!App.IsDesingMode)
+        //        throw new InvalidOperationException("Вызов конструктора, предназначенного для использования в обычном режиме");
+
+        //    /*_Countries = Enumerable.Range(1, 3)
+        //       .Select(i => new CountryInfo
+        //       {
+        //           Name = $"Country {i}",
+        //           ProvinceCounts = Enumerable.Range(1, 3).Select(j => new PlaceInfo
+        //           {
+        //               Name = $"Province {i}",
+        //               Location = new Point(i, j),
+        //               Counts = Enumerable.Range(1, 3).Select(k => new ConfirmedCount
+        //               {
+        //                   Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+        //                   Count = k
+        //               }).ToArray()
+        //           }).ToArray()
+        //       }).ToArray();*/
+        //}
+
+
+        public CountriesStatisticViewModel(DataService dataService)
         {
-            if (!App.IsDesingMode)
-                throw new InvalidOperationException("Вызов конструктора, предназначенного для использования в обычном режиме");
-
-            /*_Countries = Enumerable.Range(1, 3)
-               .Select(i => new CountryInfo
-               {
-                   Name = $"Country {i}",
-                   ProvinceCounts = Enumerable.Range(1, 3).Select(j => new PlaceInfo
-                   {
-                       Name = $"Province {i}",
-                       Location = new Point(i, j),
-                       Counts = Enumerable.Range(1, 3).Select(k => new ConfirmedCount
-                       {
-                           Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
-                           Count = k
-                       }).ToArray()
-                   }).ToArray()
-               }).ToArray();*/
-        }
-
-
-        public CountriesStatisticViewModel(MainWindowViewModel mainModel)
-        {
-            MainModel = mainModel;
-            _DataService = new DataService();
+            _DataService = dataService;
 
             #region Команды
 

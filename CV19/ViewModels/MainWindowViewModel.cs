@@ -1,6 +1,7 @@
 ﻿using CV19.Infrastructure.Commands;
 using CV19.Models.Decanat;
 using CV19.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -229,9 +230,11 @@ namespace CV19.ViewModels
         #endregion
 
         /*-------------------------------------------------------------------------------------------------------------------------*/
-        public MainWindowViewModel()
+        public MainWindowViewModel(CountriesStatisticViewModel statistic)
         {
-            CountriesStatistic = new CountriesStatisticViewModel(this);
+            CountriesStatistic = statistic;
+            statistic.MainModel = this;
+            //CountriesStatistic = new CountriesStatisticViewModel(this);
 
 
             #region Команды
