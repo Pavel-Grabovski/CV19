@@ -18,16 +18,12 @@ namespace CV19
 
         public static IHostBuilder CreateHostBuilder(string[] Args)
         {
-            var host_builder = Host.CreateDefaultBuilder(Args);
-
-            host_builder.UseContentRoot(Environment.CurrentDirectory);
-            host_builder.ConfigureAppConfiguration((host, cfg) =>
-            {
-                cfg.SetBasePath(Environment.CurrentDirectory);
-                cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            });
-
-            host_builder.ConfigureServices(App.ConfigureServices);
+            var host_builder = Host.CreateDefaultBuilder(Args)
+                .UseContentRoot(Environment.CurrentDirectory)
+                .ConfigureAppConfiguration((host, cfg) => cfg
+                    .SetBasePath(App.CurrentDirectory)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true))
+                .ConfigureServices(App.ConfigureServices);
 
             return host_builder;
         }

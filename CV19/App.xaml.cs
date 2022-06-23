@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using CV19.Services;
 using CV19.ViewModels;
@@ -47,5 +49,11 @@ namespace CV19
             services.AddSingleton<DataService>();
             services.AddSingleton<CountriesStatisticViewModel>();
         }
+
+        public static string CurrentDirectory => IsDesingMode
+            ? Path.GetDirectoryName(GetSourceCodePath())
+            : Environment.CurrentDirectory;
+
+        private static string GetSourceCodePath([CallerFilePath] string Path = null) => Path;
     }
 }
