@@ -60,24 +60,24 @@ namespace CV19.ViewModels
         /// <summary> Отладочный конструктор, используеммый в процессе разработки в визуальном дизайнере </summary>
         public CountriesStatisticViewModel() : this(null)
         {
-            if (!App.IsDesingMode)
-                throw new InvalidOperationException("Вызов конструктора, предназначенного для использования в обычном режиме");
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("Вызов конструктора, не предназначенного для использования в обычном режиме");
 
-            /*_Countries = Enumerable.Range(1, 3)
+            _Countries = Enumerable.Range(1, 10)
                .Select(i => new CountryInfo
                {
                    Name = $"Country {i}",
-                   ProvinceCounts = Enumerable.Range(1, 3).Select(j => new PlaceInfo
+                   Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
                    {
                        Name = $"Province {i}",
                        Location = new Point(i, j),
-                       Counts = Enumerable.Range(1, 3).Select(k => new ConfirmedCount
+                       Counts = Enumerable.Range(1, 10).Select(k => new ConfirmedCount
                        {
                            Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
                            Count = k
                        }).ToArray()
                    }).ToArray()
-               }).ToArray();*/
+               }).ToArray();
         }
 
 
