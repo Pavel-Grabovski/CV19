@@ -8,12 +8,13 @@ using System.Windows.Input;
 using CV19.Infrastructure.Commands;
 using System.Linq;
 using System.Windows;
+using CV19.Services.Interfaces;
 
 namespace CV19.ViewModels
 {
     internal class CountriesStatisticViewModel : ViewModel
     {
-        private readonly DataService _DataService;
+        private readonly IDataService _DataService;
 
         public MainWindowViewModel MainModel { get; internal set; }
 
@@ -57,31 +58,29 @@ namespace CV19.ViewModels
 
         #endregion
 
-        ///// <summary> Отладочный конструктор, используеммый в процессе разработки в визуальном дизайнере </summary>
-        //public CountriesStatisticViewModel() : this(null)
-        //{
-        //    if (!App.IsDesignMode)
-        //        throw new InvalidOperationException("Вызов конструктора, не предназначенного для использования в обычном режиме");
+        /// <summary> Отладочный конструктор, используеммый в процессе разработки в визуальном дизайнере </summary>
+        public CountriesStatisticViewModel() 
+        {
+            if (!App.IsDesignMode)
+                throw new InvalidOperationException("Вызов конструктора, не предназначенного для использования в обычном режиме");
 
-        //    _Countries = Enumerable.Range(1, 10)
-        //       .Select(i => new CountryInfo
-        //       {
-        //           Name = $"Country {i}",
-        //           Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
-        //           {
-        //               Name = $"Province {i}",
-        //               Location = new Point(i, j),
-        //               Counts = Enumerable.Range(1, 10).Select(k => new ConfirmedCount
-        //               {
-        //                   Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
-        //                   Count = k
-        //               }).ToArray()
-        //           }).ToArray()
-        //       }).ToArray();
-        //}
-
-
-        public CountriesStatisticViewModel(DataService dataService)
+            _Countries = Enumerable.Range(1, 10)
+               .Select(i => new CountryInfo
+               {
+                   Name = $"Country {i}",
+                   Provinces = Enumerable.Range(1, 10).Select(j => new PlaceInfo
+                   {
+                       Name = $"Province {i}",
+                       Location = new Point(i, j),
+                       Counts = Enumerable.Range(1, 10).Select(k => new ConfirmedCount
+                       {
+                           Date = DateTime.Now.Subtract(TimeSpan.FromDays(100 - k)),
+                           Count = k
+                       }).ToArray()
+                   }).ToArray()
+               }).ToArray();
+        }
+        public CountriesStatisticViewModel(IDataService dataService) : this()
         {
             _DataService = dataService;
 

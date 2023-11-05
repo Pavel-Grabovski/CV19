@@ -9,10 +9,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using CV19.Models;
+using CV19.Services.Interfaces;
 
 namespace CV19.Services
 {
-    internal class DataService
+    internal class DataService : IDataService
     {
         private const string _DataSourceAddress = @"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
@@ -58,7 +59,7 @@ namespace CV19.Services
                .Skip(1)
                .Select(line => line.Split(','));
 
-        
+
             foreach (var row in lines)
             {
                 var province = row[0].Trim();
@@ -71,18 +72,18 @@ namespace CV19.Services
                 //Double.TryParse(row[2], style, formatter, out latitude);
                 //Double.TryParse(row[3], style, formatter, out longitude);
 
-                if(row[2] == "" && row[3] == "")
+                if (row[2] == "" && row[3] == "")
                 {
                     continue;
                 }
-                var latitude =  Convert.ToDouble(row[2].Replace('.', ','));
+                var latitude = Convert.ToDouble(row[2].Replace('.', ','));
                 var longitude = Convert.ToDouble(row[2].Replace('.', ','));
 
                 var counts = row.Skip(4).Select(int.Parse).ToArray();
 
                 if (country_name == "Angola")
                 {
-                    
+
                 }
                 yield return (province, country_name, (latitude, longitude), counts);
             }

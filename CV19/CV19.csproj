@@ -11,12 +11,16 @@
   <ItemGroup>
     <Compile Remove="Resources\Новая папка1\**" />
     <Compile Remove="Resources\Новая папка\**" />
+    <Compile Remove="Services\Новая папка1\**" />
     <EmbeddedResource Remove="Resources\Новая папка1\**" />
     <EmbeddedResource Remove="Resources\Новая папка\**" />
+    <EmbeddedResource Remove="Services\Новая папка1\**" />
     <None Remove="Resources\Новая папка1\**" />
     <None Remove="Resources\Новая папка\**" />
+    <None Remove="Services\Новая папка1\**" />
     <Page Remove="Resources\Новая папка1\**" />
     <Page Remove="Resources\Новая папка\**" />
+    <Page Remove="Services\Новая папка1\**" />
   </ItemGroup>
 
   <ItemGroup>
