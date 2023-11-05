@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CV19
@@ -16,23 +18,14 @@ namespace CV19
             app.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var host_builder = Host.CreateDefaultBuilder(args);
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseContentRoot(Environment.CurrentDirectory)
+                .ConfigureAppConfiguration((host, cfg) => cfg
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                )
+                .ConfigureServices(App.ConfigureServices);
 
-            //рабочий каталог
-            host_builder.UseContentRoot(Environment.CurrentDirectory);
-
-            // конфигурация приложения
-            host_builder.ConfigureAppConfiguration((host, cfg) =>
-            {
-                cfg.SetBasePath(Environment.CurrentDirectory);
-                cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            });
-
-            host_builder.ConfigureServices(App.);
-
-            return host_builder;
-        }
     }
 }
